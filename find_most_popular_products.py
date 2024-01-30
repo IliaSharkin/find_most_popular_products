@@ -16,7 +16,7 @@ customer_schema = StructType([
     StructField("joinDate", TimestampType(), True),
     StructField("status", StringType(), True),
 ])
-customers = spark.read.option('delimiter', '\t').csv('customer.csv', schema=customer_schema,  header=False).alias("customer")
+customers: DataFrame = spark.read.option('delimiter', '\t').csv('customer.csv', schema=customer_schema,  header=False).alias("customer")
 
 product_schema = StructType([
     StructField("id", IntegerType(), True),
