@@ -38,7 +38,7 @@ orders: DataFrame = spark.read.option('delimiter', '\t').csv('order.csv', schema
 
 joined_df = orders.where("status = 'delivered'")\
     .join(products, on=products['product.id'] == orders['productID'])\
-    .join(customers, on=customers['customer.id'] == orders['customerID'])\
+    .join(customers.where("status = 'active'"), on=customers['customer.id'] == orders['customerID'])\
     .select(["customer.name", "product.name", "order.numberOfProduct"])
     
 sum_number_of_product = joined_df.groupBy("customer.name", "product.name")\
